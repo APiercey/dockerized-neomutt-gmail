@@ -10,17 +10,28 @@ No one should have to struggle to read their email!
 - HTML + Image viewing with external tools hooked up by Mailcap
 - Email search + Indexing via Notmuch
 - One command boot-up
+- Dracula default theme
 
 ## How-to-Use
-Simply:
+Clone the repo:
 ```
 git clone https://github.com/APiercey/dockerized-neomutt-gmail.git --depth 1
-make
+cd dockerized-neomutt-gmail/
 ```
-and enjoy!
+Create a OAUTH Client ID and secret here: https://console.cloud.google.com/apis/credentials?
+
+Copy the .envrc to alter
+```
+cp .envrc.sample .envrc
+```
+Alter the env variables to match your account and needs. 
+
+Run `make` and enjoy!
 
 ## TODO
 -[] Switch from Ubuntu base image to Alpine
+-[] Allow a configurable theme
+-[] Allow a customizable `.muttrc` file
 
 ## Contributing + Issues
 Contributions welcome, if people would like. If someone has a request, please open an issue.
