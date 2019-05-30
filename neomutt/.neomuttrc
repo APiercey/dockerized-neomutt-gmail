@@ -1,0 +1,162 @@
+# nice manpage here
+# http://linux.die.net/man/5/muttrc
+# set useragent to somethign awesome like eck
+# first turn off user_agent
+# toggle flagged messages
+# https://github.com/neomutt/neomutt/issues/621
+bind index . noop
+# .i will show all new/flagged
+macro index .i  "<limit>(~N|~F)<Enter>"  "view new/flag"
+# .a will show all again
+macro index .a  "<limit>~A<Enter>"       "view all"
+set user_agent=no
+my_hdr User-Agent:Mutt/1.6.2-neo (NetBSD/sparc64)
+# show message count in sidebar
+# https://github.com/neomutt/neomutt/releases
+#set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+### edit: removing flagged messages tag, people abuse this
+set sidebar_format = "%B %* %?N?%N/?%S"
+set mail_check_stats = yes
+set sidebar_width = 30
+set sidebar_visible     = yes
+set sidebar_short_path                  # Shorten mailbox names
+set sidebar_delim_chars="/"             # Delete everything up to the last / character
+set sidebar_folder_indent               # Indent folders whose names we've shortened
+set sidebar_indent_string="  "          # Indent with two spaces<Paste>
+color sidebar_new yellow default
+# dont mark messages old
+set mark_old = no
+# these bind keys for the folder pane
+# ctrl-n, ctrl-p to select next, prev folder 
+# ctrl-o to open selected folder 
+### EDIT MARK ALL READ
+# macro index .r "T.*\n;WN" "party time, excellent"
+bind index \CP sidebar-prev 
+bind index \CN sidebar-next 
+bind index \CO sidebar-open 
+bind pager \CP sidebar-prev 
+bind pager \CN sidebar-next 
+bind pager \CO sidebar-open 
+#set folder="~/Mail/mailboxes"
+##set edit_headers = yes
+bind index \t next-unread
+bind pager   \t          next-unread
+bind index  ,\t      previous-unread
+bind pager  ,\t      previous-unread
+
+# LDAP search
+# http://www.perlmonks.org/?node_id=65152
+set query_command = "~/.mutt/mutt-ldap-lookup.pl '%s'"
+# sort by thread
+set sort = threads
+# b toggles sidebar visibility 
+#macro index b '<enter-command>toggle sidebar_visible<enter>' 
+#macro pager b '<enter-command>toggle sidebar_visible<enter>' 
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>' 
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>' 
+### save my sent messages
+set record=~/Maildir/Sent
+#### useful settings from docs
+# activate TLS if available on the server
+#set signature = "~/.signature"
+set ssl_starttls=yes
+# always use SSL when connecting to a server
+set ssl_force_tls=yes
+# Don't wait to enter mailbox manually 
+unset imap_passive        
+#       # Automatically poll subscribed mailboxes for new mail (new in 1.5.11)
+set imap_check_subscribed
+# Reduce polling frequency to a sane level
+## trobert banhammer
+##set mail_check=60
+set mail_check=300
+# And poll the current mailbox more often (not needed with IDLE in post 1.5.11)
+set timeout=10
+# keep a cache of headers for faster loading (1.5.9+?)
+#set header_cache=~/.mutt/hcache
+#set header_cache=~/Localmail/hcache
+set header_cache=~/Localmail/hcache
+# Display download progress every 5K
+set net_inc=5
+# force envelope and sender
+set use_from
+set envelope_from
+set hostname="gmail.com"
+set realname="${REAL_NAME}"
+set from="${REMOTE_USER}"
+set spoolfile=~/Maildir/INBOX
+# NEEDED for maildir format
+set mbox_type=Maildir
+set folder=~/Maildir/
+
+##### UPDATED NOTMUCH SETTINGS #######
+
+    macro index <F8> \
+          "<enter-command>unset wait_key<enter><shell-escape>~/.mutt/mutt-notmuch.pl --prompt search<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
+          "notmuch: search mail"
+    macro index <F9> \
+          "<enter-command>unset wait_key<enter><pipe-message>~/.mutt/mutt-notmuch.pl thread<enter><change-folder-readonly>~/.cache/mutt_results<enter><enter-command>set wait_key<enter>" \
+          "notmuch: reconstruct thread"
+    macro index <F6> \
+          "<enter-command>unset wait_key<enter><pipe-message>~/.mutt/mutt-notmuch.pl tag -inbox<enter>" \
+          "notmuch: remove message from inbox"
+
+set move=no
+set certificate_file=~/.mutt-certificates
+ignore *
+unignore From To Cc Subject Date Reply-To Organization X-Mailer User-Agent
+
+# Order to display the headers in
+hdr_order From: Date: To: Cc: Subject:
+
+set edit_headers
+
+# Use vim as the editor - this line will wrap
+# Set wordwrap on in vim to automatically wrap lines -
+# no :gq all the time
+set editor="vim +':set textwidth=70' +':set wrap' +\`awk '/^$/ {print i+2; exit} {i++}' %s\` %s"
+
+# set format=flowed
+set text_flowed
+
+# dont mark messages old
+set nomark_old
+
+# Automatically quote message
+set include=yes
+
+# Set quotemark to 1 byte
+set indent_str="> "
+
+set index_format   = "%4C %Z %{%b %d} %-15.15F (%4l) %s"
+set forward_format="Fw: %s"     # subject in forwarded messages
+set date_format="%d/%m/%y %H:%M %Z"
+set quote_regexp="^([A-Za-z ]+>|[]%>:|}-][]>:|}-]*)"
+
+set record="~/Maildir/Sent Mail"
+# sync drafts
+set postponed="~/Maildir/Drafts"
+
+set smtp_url = "${SMTP_URL}"
+set smtp_pass = "${SMTP_PASS}"
+set mailcap_path 	= ~/.mutt/mailcap
+
+# automatically open evil HTML
+auto_view text/html
+auto_view text/plain
+auto_view image/jpeg
+auto_view image/png
+
+set mime_forward="yes"
+set mime_forward_rest="yes"
+set sidebar_divider_char='⎪'
+set smime_encrypt_self = yes
+set smime_default_key  = 07BC7E81
+
+source ~/.mutt/dracula.muttrc
+alias ll /a </all>
+
+######### BEGIN IMAP FOLDERS
+source ~/.mutt/mailboxes.muttrc
+
+######### END IMAP FOLDERS

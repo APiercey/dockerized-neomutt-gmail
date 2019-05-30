@@ -1,0 +1,40 @@
+[general]
+accounts = $ACCOUNT_NAME
+
+[Account $ACCOUNT_NAME]
+localrepository = GmailLocal
+remoterepository = GmailRemote
+postsynchook = notmuch new
+
+[Repository GmailRemote]
+type = IMAP
+remotehost = imap.gmail.com
+remoteuser = $REMOTE_USER
+
+ssl = yes
+ssl_version = tls1_2
+starttls = no
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+### You'll need to configure the gmail API stuff here:
+# https://github.com/OfflineIMAP/offlineimap/blob/master/offlineimap.conf#L858
+# https://github.com/OfflineIMAP/offlineimap/blob/master/offlineimap.conf#L886-L894
+auth_mechanisms = XOAUTH2
+oauth2_client_id = $OAUTH2_CLIENT_ID
+oauth2_client_secret = $OAUTH2_CLIENT_SECRET
+oauth2_request_url = https://accounts.google.com/o/oauth2/token
+oauth2_refresh_token = $OAUTH2_REFRESH_TOKEN
+
+## remove Gmail prefix on IMAP folders
+nametrans = lambda f: f.replace('[Gmail]/', '') if f.startswith('[Gmail]/') else f
+
+[Repository GmailLocal]
+type = Maildir
+sep = /
+localfolders = ~/Maildir
+restoreatime = no
+
+# Do not sync this folder
+folderfilter = lambda folder: folder not in ['2007-2011-inbox']
+## Remove GMAIL prefix on Google-specific IMAP folders that are pulled down.
+nametrans = lambda f: '[Gmail]/' + f if f in ['Drafts', 'Starred', 'Important', 'Spam', 'Trash', 'All Mail', 'Sent Mail'] else f

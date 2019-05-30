@@ -1,0 +1,27 @@
+FROM ubuntu:18.04
+
+RUN apt-get update
+
+RUN apt-get install -y neomutt locales vim notmuch w3m
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN mkdir /root/Maildir
+
+COPY neomutt/dracula.muttrc /root/.mutt/dracula.muttrc
+COPY neomutt/.neomuttrc /root/.neomuttrc
+COPY neomutt/.mutt/ /root/.mutt/
+
+COPY notmuch/.notmuch-config /root/.notmuch-config
+
+ENV TERM screen-256color
+
+COPY neomutt/run.sh /root/run.sh
+RUN chmod +x /root/run.sh
+
+ENTRYPOINT ["/bin/bash"]
+CMD ["/root/run.sh"]

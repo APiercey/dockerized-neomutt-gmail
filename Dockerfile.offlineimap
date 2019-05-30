@@ -1,0 +1,16 @@
+FROM ubuntu:18.04
+
+RUN apt-get update
+RUN apt-get install -y offlineimap notmuch cron ca-certificates gettext-base
+RUN apt upgrade -y openssl
+
+RUN mkdir /root/Maildir
+
+COPY offlineimap/.offlineimaprc.tmplt /root/.offlineimaprc.tmplt
+COPY notmuch/.notmuch-config /root/.notmuch-config
+
+COPY offlineimap/run.sh /root/run.sh
+RUN chmod +x /root/run.sh
+
+ENTRYPOINT ["/bin/bash"]
+CMD ["/root/run.sh"]

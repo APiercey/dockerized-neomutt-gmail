@@ -1,0 +1,9 @@
+REAL_NAME="John Doe"
+ACCOUNT_NAME=JohnDoeMainAccount
+SMTP_URL=smtps://john.doe@smtp.gmail.com
+SMTP_PASS=johns_secret_pass
+REMOTE_USER=jogn.doe@gmail.com
+OAUTH2_CLIENT_ID=john-doe-sejsgl8go8yhasd.apps.googleusercontent.com
+OAUTH2_CLIENT_SECRET=NaSK24bAWEFBN234jhjhj
+OAUTH2_REFRESH_TOKEN=asdnjkasdl7glsdinf;as8y4nac
+MAILBOXES==INBOX =Archived =Sent =Drafts =Work =Work/Freelance =Work/House =Work/JohnDoeInc 

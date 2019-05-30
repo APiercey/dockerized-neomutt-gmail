@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  offlineimap:
+    build:
+      context: .
+      dockerfile: Dockerfile.offlineimap
+    env_file: .envrc
+    volumes:
+      - ./mail:/root/Maildir
+
+  neomutt:
+    build:
+      context: .
+      dockerfile: Dockerfile.neomutt
+    container_name: neomutt
+    env_file: .envrc
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./mail:/root/Maildir
