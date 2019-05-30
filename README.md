@@ -29,9 +29,9 @@ Alter the env variables to match your account and needs.
 Run `make` and enjoy!
 
 ## TODO
--[] Switch from Ubuntu base image to Alpine
--[] Allow a configurable theme
--[] Allow a customizable `.muttrc` file
+- [ ] Switch from Ubuntu base image to Alpine
+- [ ] Allow a configurable theme
+- [ ] Allow a customizable `.muttrc` file
 
 ## Contributing + Issues
 Contributions welcome, if people would like. If someone has a request, please open an issue.
