@@ -1,9 +1,9 @@
-# Dockerized Neomutt Gmail
+# Dockerized Neomutt Gmail 🚀
 Dockerized Neomutt + OfflineIMAP + Notmuch + Mailcap + Gmail configurable with runtime env variables
 
 No one should have to struggle to read their email!
 
-## Features 🚀
+## Features
 - OAuth 2 + other settings are configurable at container run time
 - Offline sync via OfflineIMAP
 - Email viewing/editing/sending via Neomutt
